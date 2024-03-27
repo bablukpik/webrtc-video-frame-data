@@ -4,7 +4,6 @@ import axios from 'axios';
 function App() {
   const [objectSize, setObjectSize] = useState({ width: 'N/A', height: 'N/A' });
   const [isCapturing, setIsCapturing] = useState(false);
-  const [capturedImage, setCapturedImage] = useState(null);
   const videoRef = useRef();
 
   useEffect(() => {
@@ -36,7 +35,6 @@ function App() {
               width: response.data.width || 'N/A',
               height: response.data.height || 'N/A',
             });
-            setCapturedImage(response.data.c_image); // Set the captured image
           } catch (error) {
             console.error('Error getting object size:', error);
           }
@@ -66,29 +64,16 @@ function App() {
   };
 
   return (
-    <div style={{ display: 'flex' }}>
-      {/* Left Side: Capture Objects */}
-      <div style={{ flex: '1', marginRight: '20px' }}>
-        <h2>Capture Objects</h2>
-        <video ref={videoRef} autoPlay playsInline muted />
-        <div>
-          <button onClick={handleStartCapture} disabled={isCapturing}>
-            Start Capturing
-          </button>
-          <button onClick={handleStopCapture} disabled={!isCapturing}>
-            Stop Capturing
-          </button>
-        </div>
-      </div>
+    <div>
+      <h2>Object Size Information</h2>
+      <p>Width: {objectSize.width}</p>
+      <p>Height: {objectSize.height}</p>
 
-      {/* Right Side: Captured Objects */}
-      <div style={{ flex: '1' }}>
-        <h2>Captured Objects</h2>
-        <p>Width: {objectSize.width}</p>
-        <p>Height: {objectSize.height}</p>
-        {capturedImage && (
-          <img src={`data:image/jpeg;base64,${capturedImage}`} alt="Captured Object" />
-        )}
+      <video ref={videoRef} autoPlay playsInline muted />
+      
+      <div>
+        <button onClick={handleStartCapture}>Start Capture</button>
+        <button onClick={handleStopCapture}>Stop Capture</button>
       </div>
     </div>
   );
