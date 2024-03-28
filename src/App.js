@@ -29,7 +29,7 @@ function App() {
 
           // Send base64-encoded image data to the backend for object size detection
           try {
-            const response = await axios.post('http://localhost:5000/object_size', {
+            const response = await axios.post('http://localhost:5000/object-size', {
               frame_data: base64Image,
             });
             setObjectSize({
